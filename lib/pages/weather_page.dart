@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weartherapp/models/weather_model.dart';
 import 'package:weartherapp/service/weather_service.dart';
 
@@ -27,6 +28,34 @@ class _WeatherPageState extends State<WeatherPage> {
   //fetch weather
 
   //weather animations
+  String getWeatherAnimation(String? mainCondition) {
+    if (mainCondition == null) {
+      return 'assets/sunny.json';
+    }
+
+    switch (mainCondition) {
+      case 'Clear':
+        return 'assets/sunny.json';
+      case 'Rain':
+        return 'assets/rainy icon.json';
+      case 'Clouds':
+        return 'assets/cloudy icon.json';
+      case 'Snow':
+        return 'assets/Snowing.json';
+      case 'Thunderstorm':
+        return 'assets/thunderstorm.json';
+      case 'Drizzle':
+        return 'assets/rainy icon.json';
+      case 'Mist':
+        return 'assets/cloudy icon.json';
+      case 'Fog':
+        return 'assets/cloudy icon.json';
+      case 'Haze':
+        return 'assets/cloudy icon.json';
+      default:
+        return 'assets/sunny.json';
+    }
+  }
 
   //init state
   @override
@@ -39,14 +68,20 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[800],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //city name
             Text(_weather?.cityName ?? 'Loading...'),
+            //animation placeholder
+            Lottie.asset(getWeatherAnimation(_weather?.mainCondition)),
             //temperature
             Text('${_weather?.temperature.round()}°C'),
+
+            //weather condition
+            Text(_weather?.mainCondition ?? ''),
           ],
         ),
       ),
